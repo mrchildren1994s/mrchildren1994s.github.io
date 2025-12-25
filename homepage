@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人履歷｜林貞君</title>
+    <style>
+        /* 全域設定 */
+        :root {
+            --primary-blue: #4e95ea;
+            --light-blue: #e8f2fb;
+            --text-dark: #2c3e50;
+            --bg-color: #f4f7f9;
+        }
+
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* 鎖定滾動 */
+        body.locked { overflow: hidden; }
+
+        /* ---------- 密碼遮罩 (優化版) ---------- */
+        #passwordOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #8cbeff, #4e95ea);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000;
+        }
+
+        #passwordBox {
+            background: white;
+            width: 85%;
+            max-width: 350px;
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        #pwdInput {
+            width: 90%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+        }
+
+        #pwdBtn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #pwdHint {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* ---------- 履歷內容設計 ---------- */
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* 個人大頭照卡片 */
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* 圓形頭像更現代 */
+            object-fit: cover;
+            border: 4px solid var(--light-blue);
+            margin-bottom: 15px;
+        }
+
+        .profile-card h1 { margin: 10px 0 5px 0; font-size: 24px; }
+        .profile-card p { margin: 0; color: #7f8c8d; font-size: 14px; }
+
+        /* 資訊區塊卡片 */
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-section h3 {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--primary-blue);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dotted #eee;
+        }
+
+        .info-item:last-child { border-bottom: none; }
+
+        .label { color: #888; font-size: 14px; min-width: 80px; }
+        .value { color: var(--text-dark); font-size: 15px; text-align: right; flex: 1; }
+
+        /* 列表樣式 */
+        .work-list {
+            margin: 0; padding-left: 20px;
+            font-size: 15px; color: #444;
+        }
+
+        /* 連結按鈕化 */
+        .btn-link {
+            display: block;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-link:active { transform: scale(0.98); background: #d0e4f7; }
+
+        #pwdError { color: #e74c3c; margin: 10px 0; display: none; }
+    </style>
+</head>
+<body class="locked">
+
+    <div id="passwordOverlay">
+        <div id="passwordBox">
+            <h2>🔒 歡迎瀏覽</h2>
+            <p style="color:#666">請輸入存取密碼</p>
+            <input type="password" id="pwdInput" placeholder="請輸入密碼" inputmode="numeric">
+            <div id="pwdError">密碼錯誤，請重試</div>
+            <button id="pwdBtn">進入履歷</button>
+            <div id="pwdHint">💡 提示：密碼是 1234</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="profile-card">
+                <img src="picture/cat-image.jpg" alt="林貞君" class="profile-img">
+                <h1>林貞君 (艾琳)</h1>
+                <p>國立台中科技大學 資訊管理系</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="info-section">
+                <h3>基本資料</h3>
+                <div class="info-item">
+                    <span class="label">學號</span>
+                    <span class="value">3311431019</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">電話</span>
+                    <span class="value">09xx-xxx-xxx</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">通訊地址</span>
+                    <span class="value">新竹市 (美食沙漠)</span>
+                </div>
+                <a href="https://nd.nutc.edu.tw/" target="_blank" class="btn-link">🌐 前往我的網頁</a>
+            </section>
+
+            <section class="info-section">
+                <h3>工作內容</h3>
+                <ul class="work-list">
+                    <li>分析實驗室 - 化性部門</li>
+                    <li>專案管理與案件討論</li>
+                    <li>進度追蹤與流程推進</li>
+                </ul>
+            </section>
+
+            <section class="info-section">
+                <h3>個人興趣</h3>
+                <div class="info-item">
+                    <span class="label">休閒</span>
+                    <span class="value">追劇、聽音樂</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">最愛藝人</span>
+                    <span class="value"><a href="https://www.youtube.com/channel/UCXteDRy5qB0IjA8WPusCJ7w" target="_blank">Mr.Children</a></span>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <h3>學習歷程</h3>
+                <a href="https://webdesign.tutsplus.com/zh-hant/the-30-css-selectors-you-must-memorize--net-16048t" target="_blank" class="btn-link">📖 必讀 CSS 選擇器</a>
+                <a href="子目錄/學習歷程.html" target="_blank" class="btn-link" style="background: #4e95ea; color: white;">🚀 查看我的 Web 練習</a>
+            </section>
+        </main>
+
+        <footer style="text-align: center; color: #bbb; font-size: 12px; padding: 20px;">
+            © 2024 林貞君 個人履歷
+        </footer>
+    </div>
+
+    <script>
+        const correctPassword = "1234";
+        const pwdBtn = document.getElementById("pwdBtn");
+        const pwdInput = document.getElementById("pwdInput");
+        const pwdError = document.getElementById("pwdError");
+        const overlay = document.getElementById("passwordOverlay");
+
+        function checkPassword() {
+            if (pwdInput.value === correctPassword) {
+                overlay.style.opacity = "0";
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                    document.body.classList.remove("locked");
+                }, 300);
+            } else {
+                pwdError.style.display = "block";
+                pwdInput.value = "";
+                pwdInput.focus();
+            }
+        }
+
+        pwdBtn.onclick = checkPassword;
+        pwdInput.addEventListener("keypress", (e) => { if (e.key === "Enter") checkPassword(); });
+    </script>
+</body>
+</html>
