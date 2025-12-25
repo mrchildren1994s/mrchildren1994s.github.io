@@ -1,0 +1,172 @@
+<!DOCTYPE html> 
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>學習歷程</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #e8f4fc;
+      text-align: center;
+      margin: 40px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #004c8c;
+      margin-bottom: 20px;
+    }
+
+    /* ===== 表格樣式 ===== */
+    table {
+      margin: 0 auto;
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 70%;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    th {
+      background-color: #007acc;
+      color: white;
+      padding: 12px;
+      font-size: 20px;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #cce7ff;
+      font-size: 18px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* 滑鼠移入列變色效果 */
+    tr:hover td {
+      background-color: #e0f2ff;
+      transition: background-color 0.3s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007acc;
+    }
+
+    a:hover {
+      color: #005b99;
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #444;
+      background-color: #d0eaff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .back-link:hover {
+      background-color: #a8d4ff;
+    }
+
+    /* ===== 🐱 貓咪精靈動畫 ===== */
+    .cat {
+      width: 64px;
+      height: 64px;
+      background-image: url('https://i.imgur.com/Cd6W2nS.png'); /* 可用貓咪精靈圖 */
+      background-repeat: no-repeat;
+      background-size: 256px 64px; /* 共4格動畫，一格寬64px */
+      position: fixed;
+      bottom: 30px;
+      left: 0;
+      animation: walk 0.8s steps(4) infinite, move 12s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes walk {
+      from { background-position: 0 0; }
+      to { background-position: -256px 0; }
+    }
+
+    @keyframes move {
+      0% { left: 0; transform: scaleX(1); }
+      50% { left: calc(100% - 64px); transform: scaleX(1); }
+      51% { transform: scaleX(-1); }
+      100% { left: 0; transform: scaleX(-1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>學習歷程</h1>
+
+  <table>
+    <tr>
+      <th>學習日期</th>
+      <th>作業項目</th>
+    </tr>
+    <tr>
+      <td>2025/10/19、10/26</td>
+      <td>
+        <a href="div.html">版型製作</a>、
+        <a href="目錄.html">目錄練習</a>
+      </td>
+    </tr>
+    <tr>
+      <td>2025/09/21～</td>
+      <td><a href="../子目錄/chatgpt-practice.html">ChatGPT引用</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/09</td>
+      <td><a href="css font-family.html">CSS font-family說明</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/10</td>
+      <td><a href="mrchildren.html">粉絲頁練習</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/15</td>
+      <td><a href="../子目錄/JavaScript Canvas 入門示範教學.html">JavaScript Canvas 入門示範教學</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/15</td>
+      <td><a href="../子目錄/Tree Animation Demo.html">資料結構中 樹的定義、種類及如何操作</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/23</td>
+      <td><a href="../子目錄/1123-input.html">帳號、密碼互動頁</a></td>
+    </tr>
+     <tr>
+      <td>2025/11/30</td>
+      <td><a href="../子目錄/1130-漢堡.html">漢堡選單</td>
+    </tr>
+     <tr>
+      <td>2025/11/30</td>
+      <td><a href="../子目錄/1130-隨機.html">隨機打散</td>
+    </tr>
+    <tr>
+      <td>2025/12/07</td>
+      <td><a href="../子目錄/1207排序找出最大.html">由小到大排序</td>
+    </tr>
+    <tr>
+      <td>2025/12/14</td>
+      <td><a href="../子目錄/1214隨機+排序+找出最大位置.html">隨機+排序+找出最大位置</td>
+    </tr>
+    <tr>
+      <td>2025/12/21</td>
+      <td><a href="../子目錄/1221猜數字-二分搜尋法.html">猜數字-二分搜尋法</td>
+    </tr>
+  </table>
+
+  <a href="../index.html" class="back-link">回首頁</a>
+
+</body>
+</html>

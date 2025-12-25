@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- saved from url=(0112)https://irenelin0757.neocities.org/%E5%AD%90%E7%9B%AE%E9%8C%84/1221%E4%BA%8C%E5%88%86%E6%B3%95%E6%90%9C%E5%B0%8B -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜數字 - 二分搜尋法</title>
+    <style>
+        /* 水藍色背景 */
+        body { 
+            background-color: #e0f7fa; 
+            font-family: "微軟正黑體", sans-serif; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 白色卡片區塊 */
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 150, 200, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid #b2ebf2;
+        }
+
+        h2 { color: #006064; margin-bottom: 20px; }
+        
+        /* 陣列顯示樣式 (自動換行) */
+        .array-display {
+            background-color: #f1f8e9;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #333;
+            margin-bottom: 20px;
+            word-break: break-all;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        /* 輸入框樣式 */
+        input[type="number"] {
+            padding: 10px;
+            border: 2px solid #b2ebf2;
+            border-radius: 8px;
+            width: 120px;
+            font-size: 16px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        /* 藍色按鈕 */
+        button { 
+            background-color: #0288d1; 
+            color: white;
+            padding: 10px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover { background-color: #01579b; transform: translateY(-2px); }
+
+        /* 結果顯示區 */
+        .result-box { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #fff3e0;
+            border-radius: 10px;
+            color: #e65100;
+            font-weight: bold;
+            min-height: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">  <a href="https://irenelin0757.neocities.org/%E5%AD%90%E7%9B%AE%E9%8C%84/%E5%AD%B8%E7%BF%92%E6%AD%B7%E7%A8%8B.html" class="back-link">← 回『學習歷程』</a>
+        <h2>🔢 猜數字 (二分搜尋)</h2>
+        
+        <p>資料範圍：1 ~ 30</p>
+        
+        <div class="array-display" id="array-view">[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]</div>
+
+        <div>
+            <input type="number" id="targetInput" placeholder="請輸入 1~30" min="1" max="30">
+            <button onclick="bisearch()">開始搜尋</button>
+        </div>
+
+        <div id="output" class="result-box">
+            請輸入數字並按下搜尋...
+        </div>
+    </div>
+
+    <script>
+        // 1. 動態建立 1 到 30 的陣列
+        let arr = [];
+        for (let i = 1; i <= 30; i++) {
+            arr.push(i);
+        }
+
+        // 顯示陣列內容在畫面上
+        document.getElementById("array-view").innerText = "[" + arr.join(", ") + "]";
+
+        function bisearch() {
+            // 2. 獲取輸入值
+            let inputVal = document.getElementById("targetInput").value;
+            
+            // 防呆機制
+            if (inputVal === "") {
+                alert("請輸入一個數字！");
+                return;
+            }
+
+            let key = parseInt(inputVal); // 轉成整數
+
+            // 檢查範圍
+            if (key < 1 || key > 30) {
+                document.getElementById("output").innerHTML = "⚠️ 請輸入 1 到 30 之間的數字";
+                return;
+            }
+            
+            // 3. 二分搜尋邏輯 (Binary Search)
+            let left = 0;
+            let right = arr.length - 1;
+            let find_fig = false;
+            let middle;
+            let count = 0; // 計算步驟次數
+
+            while (left <= right) {
+                count++; 
+                middle = Math.floor((left + right) / 2);
+
+                if (arr[middle] === key) {
+                    find_fig = true;
+                    document.getElementById("output").innerHTML = 
+                        "✅ 找到了！數字 " + key + " 位於索引位置 " + middle + "<br>" +
+                        "(電腦使用了 " + count + " 次二分搜尋找到)";
+                    return; 
+                } else if (arr[middle] > key) {
+                    right = middle - 1; // 往左找
+                } else {
+                    left = middle + 1;  // 往右找
+                }
+            }
+
+            if (!find_fig) {
+                document.getElementById("output").innerHTML = "❌ 未找到 (該數字不在清單中)";
+            }
+        }
+    </script>
+
+
+</body></html>
