@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亂數 1-6 全取排序</title>
+<style>
+
+        /* 水藍色背景 */
+
+        body { 
+
+            background-color: #e0f7fa; 
+
+            font-family: "微軟正黑體", sans-serif; 
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+
+        }
+
+        /* 白色卡片區塊 */
+
+        .container {
+
+            background-color: #ffffff;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 4px 15px rgba(0, 150, 200, 0.2);
+
+            text-align: center;
+
+            max-width: 450px;
+
+            width: 90%;
+
+            border: 2px solid #b2ebf2;
+
+        }
+
+        h2 { 
+
+            color: #006064; 
+
+            margin-bottom: 20px; 
+
+            font-size: 24px;
+
+        }
+
+        /* 藍色按鈕 */
+
+        button { 
+
+            background-color: #0288d1; 
+
+            color: white;
+
+            padding: 12px 30px;
+
+            font-size: 18px;
+
+            border: none;
+
+            border-radius: 50px;
+
+            cursor: pointer;
+
+            transition: all 0.3s;
+
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+
+        }
+
+        button:hover { 
+
+            background-color: #01579b; 
+
+            transform: translateY(-2px);
+
+        }
+
+        /* 結果顯示區 */
+
+        .result-box { 
+
+            margin-top: 25px; 
+
+            padding: 20px; 
+
+            background: #f1f8e9; 
+
+            border-radius: 10px;
+
+            color: #333;
+
+            text-align: left;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            border: 1px dashed #a5d6a7;
+
+        }
+
+        .label { font-weight: bold; color: #006064; display: inline-block; width: 100px; }
+
+        .val { font-size: 18px; color: #333; }
+
+        .sorted-text { color: #1565c0; font-weight: bold; font-size: 20px; }
+
+        .max-text { color: #d32f2f; font-weight: bold; background-color: #ffebee; padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>🎲 1-6 全數打散與排序</h2>
+<p>抽出 6 個數值 + 排序 + 找最大值位置</p>
+<button onclick="runLottery()">開始執行</button>
+<div id="output" class="result-box">
+
+            請點擊按鈕...
+</div>
+</div>
+<script>
+
+        function runLottery() {
+
+            let a = [];
+
+            // 1. 初始化陣列 [1, 2, 3, 4, 5, 6]
+
+            for (let i = 0; i < 6; i++) {
+
+                a[i] = i + 1;
+
+            }
+
+            // 2. 隨機打散 (Fisher-Yates Shuffle)
+
+            // 因為要取出 6 個 (全部)，所以迴圈要跑完陣列長度 (i < 5 即可，最後一個自動確定)
+
+            for (let i = 0; i < 5; i++) {
+
+                let r = Math.floor(Math.random() * (6 - i)); // 隨機選一個位置
+
+                let targetPos = 5 - i;                       // 目標放到後面
+
+                // 交換數值
+
+                let temp = a[targetPos];
+
+                a[targetPos] = a[r];
+
+                a[r] = temp;
+
+            }
+
+            // 3. 取得抽出的數字 (因為全取，就是整個陣列 a)
+
+            // 為了保持邏輯一致，我們複製一份 a
+
+            let drawnNums = [...a];
+
+            // 4. 找出最大數值與位置
+
+            let maxVal = Math.max(...drawnNums);            // 最大值 (一定是 6)
+
+            let maxIndex = drawnNums.indexOf(maxVal) + 1;   // 找出 6 在第幾個位置
+
+            // 5. 製作排序後的版本
+
+            let sortedNums = [...drawnNums].sort(function(a, b) {
+
+                return a - b; // 由小到大排序
+
+            });
+
+            // 6. 顯示結果
+
+            let log = "";
+
+            // 顯示原始打散順序
+
+            log += "<span class='label'>打散順序：</span>";
+
+            log += "<span class='val'>" + drawnNums.join(" , ") + "</span><br>";
+
+            // 顯示排序後 (因為全取 1-6，排序後一定是 1,2,3,4,5,6)
+
+            log += "<span class='label'>排序之後：</span>";
+
+            log += "<span class='sorted-text'>" + sortedNums.join(" , ") + "</span><br><br>";
+
+            // 顯示最大值資訊
+
+            log += "最大數值是 <span class='max-text'>" + maxVal + "</span><br>";
+
+            log += "它位於打散後的 <span class='max-text'>第 " + maxIndex + " 個</span> 位置";
+
+            document.getElementById("output").innerHTML = log;
+
+        }
+</script>
+</body>
+</html>
+ 

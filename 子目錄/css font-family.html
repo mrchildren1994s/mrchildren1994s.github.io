@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Font-Family 說明目錄</title>
+  <style>
+    /* 從上次修正中新增，確保整個頁面沒有水平捲動 */
+    html {
+      overflow-x: hidden; 
+    }
+
+    /* 全局字型 */
+    body {
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    /* ❗ 原本的 .menu 樣式已被移除或替換，避免衝突 ❗ */
+
+    /* ======================================================
+      🍔 漢堡按鈕 (固定在左上角)
+    ====================================================== */
+    .menu-btn {
+      width: 30px;
+      height: 25px;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: #333;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    /* 按鈕點擊後變成 X 的動畫 */
+    .menu-btn.open span:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+    }
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.open span:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+
+    /* ======================================================
+      🚪 側邊選單（初始隱藏在左側）
+    ====================================================== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px; /* 初始隱藏 */
+      width: 250px;
+      height: 100%;
+      background-color: #3f51b5; /* 選單背景色 */
+      padding-top: 60px; 
+      transition: left 0.4s ease-in-out;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      z-index: 999;
+      overflow-y: auto; 
+    }
+
+    /* 側邊選單滑出狀態 */
+    .sidebar.open {
+      left: 0;
+    }
+
+    /* 調整選單內容樣式，讓它與側邊欄背景搭配 */
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: white; 
+      transition: background-color 0.3s;
+      font-size: 18px;
+    }
+    .sidebar ul li a:hover {
+      background-color: #5c6bc0;
+    }
+
+    /* 子目錄樣式 (原本的 .submenu 樣式可以保留) */
+    .submenu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background-color: #e6f0fa;
+    }
+
+    .submenu li a {
+      color: #333; /* 這裡的字體顏色可能需要根據新的側邊欄背景做調整 */
+    }
+
+    /* 內容區塊 */
+    .section {
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* 返回按鈕 */
+    .back, .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 16px;
+      background-color: #4a90e2;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .back:hover, .back-link:hover {
+      background-color: #357ABD;
+    }
+  </style>
+</head>
+<body>
+<div id="top"></div>
+
+  <div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="sidebar" id="sideMenu">
+    <ul>
+      <li>
+        <a href="#">CSS Font-Family️(可下拉進入說明)</a>
+        <ul class="submenu">
+          <li><a href="#sub1">字型概念</a></li>
+          <li><a href="#sub2">中文常用字型</a></li>
+          <li><a href="#sub3">英文常用字型</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <h1>CSS Font-Family 說明目錄</h1>
+
+  <a href="../子目錄/學習歷程.html" class="back-link">回『學習歷程』</a>
+   
+<div id="sub1" class="section">
+    <h2>字型概念</h2>
+    <p>在 CSS 中，<code>font-family</code> 屬性用來設定文字的字型，可以指定多個字型作為備援，依序使用。語法如下：</p>
+    <pre><code>font-family: 字型1, 字型2, 通用字型;</code></pre>
+    <p>如果電腦沒有安裝第一個字型，就會使用下一個字型，最後使用通用字型（如 serif, sans-serif）。</p>
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+  <div id="sub2" class="section">
+    <h2>中文常用字型</h2>
+    <ul>
+      <li>微軟正黑體: <code>"Microsoft JhengHei"</code></li>
+      <li>蘋方體: <code>"PingFang TC"</code></li>
+      <li>思源黑體: <code>"Noto Sans TC"</code></li>
+      <li>新細明體: <code>"PMingLiU"</code></li>
+      <li>標楷體: <code>"DFKai-SB"</code></li>
+    </ul>
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+  <div id="sub3" class="section">
+    <h2>英文常用字型</h2>
+    <ul>
+      <li>無襯線字型（Sans-serif）: Arial, Helvetica, Verdana</li>
+      <li>有襯線字型（Serif）: Times New Roman, Georgia</li>
+      <li>等寬字型（Monospace）: Courier New, Consolas</li>
+      <li>手寫字型（Cursive）: Comic Sans MS, Brush Script MT</li>
+      <li>裝飾字型（Fantasy）: Papyrus, Impact</li>
+    </ul>
+    <a href="#top" class="back">回到主目錄</a>
+  </div>
+
+<script>
+  function toggleMenu() {
+    // 取得選單
+    const menu = document.getElementById("sideMenu"); 
+    // 取得漢堡按鈕
+    const button = document.querySelector(".menu-btn");
+
+    // 切換它們的 .open class
+    menu.classList.toggle("open");
+    button.classList.toggle("open");
+  }
+</script>
+
+</body>
+</html>

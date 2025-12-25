@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日系搖滾天團 MR.Children</title>
+  <style>
+    body {
+      font-family: 'Microsoft JhengHei', Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      background-color: #f0f8ff;
+    }
+
+    h1, h2 {
+      color: #004080;
+    }
+
+    /* ===== 下拉選單樣式 ===== */
+    nav {
+      background-color: #e0f0ff;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: fit-content;
+      margin-bottom: 30px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 10px 20px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      display: block;
+      color: #004080;
+      text-decoration: none;
+      padding: 10px 15px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #cce0ff;
+      border-radius: 6px;
+    }
+
+    /* 子選單 */
+    nav ul ul {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      background-color: #f5fbff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: none;
+      min-width: 180px;
+      padding: 5px 0;
+    }
+
+    nav ul ul li a {
+      padding: 8px 15px;
+      font-weight: normal;
+    }
+
+    nav ul li:hover > ul {
+      display: block;
+    }
+
+    /* 返回學習歷程 */
+    .back-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #004080;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-left: 10px;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #1d5bbf;
+      text-decoration: underline;
+    }
+
+    /* 內容區塊樣式 */
+    .section {
+      margin-top: 60px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: #e0f0ff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: #004080;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      background-color: #cce0ff;
+    }
+
+    /* 成員排版 */
+    .member-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .member-info {
+      flex: 1;
+      padding-right: 20px;
+      min-width: 250px;
+    }
+
+    .member-info h3 {
+      margin: 0 0 5px 0;
+      color: #004080;
+    }
+
+    .member-info p {
+      margin: 0;
+      text-align: justify;
+    }
+
+    .member-photo {
+      flex-shrink: 0;
+    }
+
+    .member-photo img {
+      width: 180px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    ul.songs {
+      list-style-type: square;
+      line-height: 1.8;
+    }
+
+    ul.songs a {
+      color: #004080;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    ul.songs a:hover {
+      text-decoration: underline;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="top">Mr.Children 粉絲頁</h1>
+
+  <!-- 下拉式目錄 -->
+  <nav>
+    <ul>
+      <li><a href="#top">首頁 ▾</a>
+        <ul>
+          <li><a href="#part1">樂團成員</a></li>
+          <li><a href="#part2">音樂特色</a></li>
+          <li><a href="#part3">來臺花絮</a></li>
+          <li><a href="#part4">成名作品</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+
+  <!-- 第一部分 -->
+  <div id="part1" class="section">
+    <h2>樂團成員</h2>
+    <img src="../picture/mrchildren.jpg" alt="Mr.Children">
+    <p>Mr.Children 成立於 1989 年，由四位成員組成。以多元的音樂旋律及歌詞，表達對生命的熱情、哀傷、不安與各種期待。</p>
+    <p>初出道的百萬名曲《Tomorrow never knows》，激勵許多人勇敢面對困境。</p>
+
+    <div class="member-block">
+      <div class="member-info">
+        <h3>櫻井和壽（主唱／吉他）</h3>
+        <p>大部分歌曲均由他作詞作曲，略帶沙啞又可高可低的聲線是其特色。</p>
+      </div>
+      <div class="member-photo">
+        <img src="../picture/sakurai.jpg" alt="櫻井和壽">
+      </div>
+    </div>
+
+    <div class="member-block">
+      <div class="member-info">
+        <h3>田原健一（吉他）</h3>
+        <p>以和弦伴奏為主，演奏穩健且充滿感情。</p>
+      </div>
+      <div class="member-photo">
+        <img src="../picture/tahara.jpg" alt="田原健一">
+      </div>
+    </div>
+
+    <div class="member-block">
+      <div class="member-info">
+        <h3>中川敬輔（貝斯）</h3>
+        <p>安靜穩重，與鼓手搭配營造出穩定節奏感。</p>
+      </div>
+      <div class="member-photo">
+        <img src="../picture/nakagawa.jpg" alt="中川敬輔">
+      </div>
+    </div>
+
+    <div class="member-block">
+      <div class="member-info">
+        <h3>鈴木英哉（鼓手）</h3>
+        <p>演奏時充滿熱情，與櫻井互動十足，為團隊注入活力。</p>
+      </div>
+      <div class="member-photo">
+        <img src="../picture/suzuki.jpg" alt="鈴木英哉">
+      </div>
+    </div>
+
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+  <!-- 第二部分 -->
+  <div id="part2" class="section">
+    <h2>音樂特色</h2>
+    <p>Mr.Children 的音樂橫跨流行、搖滾與抒情，歌詞細膩描繪人生情感，旋律多元而豐富。</p>
+    <img src="../picture/mrchildren-jump.jpg" alt="音樂照片">
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+  <!-- 第三部分 -->
+  <div id="part3" class="section">
+    <h2>來臺花絮</h2>
+    <p>2019 年首次海外演出於台北小巨蛋舉行《重力與呼吸》巡演最終站。</p>
+    <p>五月天是促成本次演唱會的重要推手之一。</p>
+    <img src="../picture/mrchildren-mayday.jpg" alt="Mr.Children 與五月天">
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+  <!-- 第四部分 -->
+  <div id="part4" class="section">
+    <h2>成名作品</h2>
+    <ul class="songs">
+      <li><a href="https://www.youtube.com/watch?v=3Um_xMmE8OA" target="_blank">くるみ</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ACt_DfVjqIY" target="_blank">シーソーゲーム ～勇敢な恋の歌～</a></li>
+      <li><a href="https://www.youtube.com/watch?v=pczkqXFlwWc" target="_blank">Brand new planet</a></li>
+      <li><a href="https://www.youtube.com/watch?v=_B09-nM3knE" target="_blank">足音 ~Be Strong~</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ieQRDtBpBdY" target="_blank">Your Song</a></li>
+    </ul>
+    <a href="#top" class="back">↑ 返回主目錄</a>
+  </div>
+
+</body>
+</html>

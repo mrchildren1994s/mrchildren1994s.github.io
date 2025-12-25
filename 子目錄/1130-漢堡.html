@@ -1,0 +1,222 @@
+<!DOCTYPE html> 
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>學習歷程</title>
+
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #e8f4fc;
+      text-align: center;
+      margin: 40px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #004c8c;
+      margin-bottom: 20px;
+    }
+
+    /* ======================================================
+       🔵 漢堡按鈕 (帶開合動畫)
+    ====================================================== */
+    .menu-btn {
+      width: 35px;
+      height: 30px;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 5px;
+      border-radius: 5px;
+      background-color: #005b99;
+      transition: 0.4s;
+    }
+
+    /* 開啟側邊欄時的動畫：轉成 X */
+    .menu-btn.open span:nth-child(1) {
+      transform: translateY(12px) rotate(45deg);
+    }
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.open span:nth-child(3) {
+      transform: translateY(-12px) rotate(-45deg);
+    }
+
+    /* ======================================================
+       🔵 側邊選單（右側滑出）
+    ====================================================== */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -260px; /* 初始隱藏 */
+      width: 260px;
+      height: 100%;
+      background-color: #007acc;
+      padding-top: 70px;
+      transition: 0.4s ease;
+      box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+      z-index: 99;
+    }
+
+    .side-menu.show {
+      right: 0; /* 滑出 */
+    }
+
+    .side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .side-menu ul li {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .side-menu ul li a {
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .side-menu ul li:hover {
+      background-color: #005b99;
+    }
+
+    /* ======================================================
+       表格樣式
+    ====================================================== */
+    table {
+      margin: 0 auto;
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 70%;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    th {
+      background-color: #007acc;
+      color: white;
+      padding: 12px;
+      font-size: 20px;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #cce7ff;
+      font-size: 18px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #e0f2ff;
+      transition: background-color 0.3s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007acc;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #444;
+      background-color: #d0eaff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+  
+  </style>
+</head>
+<body>
+
+  <!--🔥 漢堡按鈕 -->
+  <div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!--🔥 側邊滑出選單 -->
+  <nav class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../index.html">🏠 首頁</a></li>
+      <li><a href="../子目錄/chatgpt-practice.html">🤖 ChatGPT 引用</a></li>
+      <li><a href="css font-family.html">🔤 CSS font-family 說明</a></li>
+      <li><a href="mrchildren.html">🎵 粉絲頁練習</a></li>
+      <li><a href="目錄.html">📁 目錄練習</a></li>
+      <li><a href="div.html">🧩 版型製作</a></li>
+    </ul>
+  </nav>
+ <a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+  
+   <table>
+    <tr>
+      <th>學習日期</th>
+      <th>作業項目</th>
+    </tr>
+    <tr>
+      <td>2025/10/19、10/26</td>
+      <td><a>版型製作</a>、<a>目錄練習--請點選左上角選單</a></td>
+    </tr>
+    <tr>
+      <td>2025/09/21～</td>
+      <td><a>ChatGPT引用--請點選左上角選單</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/09</td>
+      <td><a>CSS font-family說明--請點選左上角選單</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/10</td>
+      <td><a>粉絲頁練習--請點選左上角選單</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/15</td>
+      <td><a href="../子目錄/JavaScript Canvas 入門示範教學.html">JavaScript Canvas 入門示範教學</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/15</td>
+      <td><a href="../子目錄/Tree Animation Demo.html">資料結構 樹的定義與操作</a></td>
+    </tr>
+    <tr>
+      <td>2025/11/23</td>
+      <td><a href="../子目錄/1123-input.html">帳號、密碼互動頁</a></td>
+    </tr>
+  </table>
+
+  <a href="../index.html" class="back-link">回首頁</a>
+
+  <div class="cat"></div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sideMenu").classList.toggle("show");
+      document.querySelector(".menu-btn").classList.toggle("open");
+    }
+  </script>
+
+</body>
+</html>

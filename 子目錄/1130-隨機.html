@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模擬骰子擲點 (1-6)</title>
+
+  <style>
+    /* 🎨 基本樣式與背景 */
+    body {
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background-color: #f0fff0; /* 淺綠色或米白色背景 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #38761d; /* 深綠色標題 */
+      margin-bottom: 30px;
+    }
+    
+    /* 🎲 骰子 (Dice) 樣式 */
+    .dice {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      margin: 15px;
+      border-radius: 10px; /* 方形圓角 */
+      background-color: #ffffff; /* 白色骰子底色 */
+      color: #38761d; /* 骰子點數顏色 */
+      font-size: 36px;
+      font-weight: bold;
+      border: 3px solid #6aa84f; /* 綠色邊框 */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 立體陰影 */
+      transition: transform 0.1s ease-out, opacity 0.3s ease-out;
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    
+    /* 顯示動畫效果 */
+    .dice.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* 擲出動畫效果：模擬旋轉 */
+    .dice.rolling {
+      animation: roll 0.5s infinite alternate;
+      /* 讓數字在擲出時快速變動，增加視覺效果 (可選) */
+      color: #888;
+    }
+
+    @keyframes roll {
+        0% { transform: rotate(0deg) scale(1); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        100% { transform: rotate(10deg) scale(1.05); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+    }
+
+    /* 容器樣式 */
+    #result-container {
+      display: flex;
+      flex-wrap: wrap; 
+      justify-content: center;
+      margin-top: 20px;
+      min-height: 120px; 
+    }
+
+    /* 🕹️ 按鈕樣式 */
+    #roll-button {
+      background-color: #6aa84f; /* 綠色按鈕 */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px #497d34;
+      transition: background-color 0.1s, transform 0.1s;
+    }
+
+    #roll-button:active {
+      background-color: #497d34;
+      box-shadow: 0 2px #3e6d2b;
+      transform: translateY(2px);
+    }
+    
+    /* 響應式調整 */
+    @media (max-width: 480px) {
+      .dice {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+      }
+    }
+  </style>
+<a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+  <h1>學習歷程</h1>
+</head>
+<body>
+
+  <h1>🎲 模擬骰子擲點</h1>
+  
+  <button id="roll-button">
+    擲出 3 顆骰子
+  </button>
+
+  <div id="result-container">
+    </div>
+
+  <script>
+    const NUM_DICE = 3; // 設置要擲出的骰子數量
+    const MIN_VALUE = 1;
+    const MAX_VALUE = 6;
+    const ROLL_DURATION = 1000; // 擲骰子的動畫時間 (毫秒)
+
+    /**
+     * 模擬單顆骰子擲點 (1 到 6，可重複)
+     * @returns {number} - 隨機骰子點數
+     */
+    function rollSingleDie() {
+      return Math.floor(Math.random() * (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
+    }
+
+    /**
+     * 主處理函數：點擊按鈕後執行擲骰子和顯示
+     */
+    function handleRoll() {
+      const button = document.getElementById('roll-button');
+      const container = document.getElementById('result-container');
+      
+      button.disabled = true;
+      button.textContent = '擲骰中...';
+      container.innerHTML = ''; // 清空上次的結果
+
+      // 1. 創建並顯示虛擬骰子，添加 rolling 類進行動畫
+      const diceElements = [];
+      for (let i = 0; i < NUM_DICE; i++) {
+        const die = document.createElement('div');
+        die.className = 'dice rolling';
+        // 在動畫過程中顯示問號或隨機數字，增加視覺效果
+        die.textContent = '?'; 
+        container.appendChild(die);
+        diceElements.push(die);
+
+        // 加上延遲，讓骰子依序出現
+        setTimeout(() => {
+          die.classList.add('show');
+        }, i * 100); 
+      }
+      
+      // 2. 延遲一段時間後，計算結果並顯示
+      setTimeout(() => {
+        const results = [];
+        
+        // 計算並更新每個骰子的最終點數
+        diceElements.forEach((die, index) => {
+          const result = rollSingleDie();
+          results.push(result);
+
+          // 移除 rolling 動畫，顯示最終點數
+          die.classList.remove('rolling');
+          die.textContent = result;
+          // 加上輕微的彈跳效果
+          die.style.transform = 'scale(1.1)'; 
+          setTimeout(() => {
+             die.style.transform = 'scale(1)'; 
+          }, 100);
+        });
+        
+        // 3. 恢復按鈕
+        button.disabled = false;
+        button.textContent = `擲出 ${NUM_DICE} 顆骰子`;
+
+        // (可選) 可以在這裡顯示總點數
+        const total = results.reduce((sum, current) => sum + current, 0);
+        console.log(`擲出點數: ${results.join(', ')}，總和: ${total}`);
+      }, ROLL_DURATION);
+    }
+
+    // 綁定按鈕點擊事件
+    document.getElementById('roll-button').addEventListener('click', handleRoll);
+  </script>
+
+</body>
+</html>

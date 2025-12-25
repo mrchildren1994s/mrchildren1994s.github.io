@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>數字打亂與隨機抽取 (1-30)</title>
+  
+  
+  
+  <style>
+    /* ----- 全域設定 ----- */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #e0f7ff; /* 柔和的水藍色背景 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh; /* 佔滿視窗高度 */
+      margin: 0;
+      padding: 20px; /* 避免手機版面貼邊 */
+      box-sizing: border-box;
+    }
+
+    /* ----- 主要內容卡片 (手機/電腦通用) ----- */
+    #main-content {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 600px; /* 電腦版最大寬度 */
+      padding: 30px;
+      border-radius: 20px; /* 圓潤的邊角 */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* 漂亮的陰影 */
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-top: 0;
+      font-size: 1.8rem;
+    }
+
+    /* ----- 藍色執行按鈕 ----- */
+    button {
+      background-color: #007bff; /* 鮮明的寶藍色 */
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 50px; /* 藥丸形狀按鈕 */
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); /* 藍色光暈陰影 */
+      transition: all 0.3s ease;
+      width: 80%; /* 按鈕寬度 */
+      max-width: 300px;
+      margin: 20px 0;
+      /* 禁止手機上點擊時的藍色背景閃爍 */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:hover {
+      background-color: #0056b3; /* 滑鼠懸停變深 */
+      transform: translateY(-2px); /* 輕微上浮 */
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+    }
+
+    button:active {
+      transform: translateY(1px); /* 點擊下壓感 */
+    }
+
+    /* ----- 輸出結果區塊 ----- */
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      border: 1px solid #e9ecef;
+      text-align: left; /* 內容靠左對齊較易閱讀 */
+    }
+
+    .result-row {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #dee2e6;
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #6c757d;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .numbers-display {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 1.1rem;
+      color: #2c3e50;
+      word-wrap: break-word; /* 防止數字過長超出 */
+    }
+
+    .highlight-text {
+      color: #007bff;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* ----- 左上角返回連結 ----- */
+    .back-link {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #555;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 20px;
+    }
+
+    /* ----- 手機版專用調整 (Media Query) ----- */
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      
+      #main-content {
+        padding: 20px; /* 減少內距 */
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 1.5rem; /* 標題變小 */
+      }
+
+      button {
+        width: 100%; /* 手機上按鈕全寬，好按 */
+        max-width: none;
+        padding: 15px 0;
+      }
+
+      #output {
+        font-size: 0.95rem;
+      }
+      
+      .back-link {
+        position: static; /* 手機上不固定，改為流式排列 */
+        display: inline-block;
+        margin-bottom: 15px;
+        align-self: flex-start;
+      }
+    }
+  </style>
+
+<body>
+
+  <a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+
+  <div id="main-content"> 
+    
+    <h1>隨機抽取+排序 (1-30)</h1>
+    
+    
+    <button onclick="shuffleAndDisplay()">隨機抽取+排序</button>
+    
+    <div id="output">
+      <div style="text-align: center; color: #999;">
+        請點擊上方藍色按鈕開始
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 設定要抽取的數字數量
+    const DRAW_COUNT = 5; 
+    
+    // 建立 1 到 maxNum 的陣列
+    function createInitialArray(maxNum) {
+        return Array.from({ length: maxNum }, (_, i) => i + 1);
+    }
+    
+    function shuffleAndDisplay() {
+      // 1. 初始陣列 (1 到 30)
+      let initialArray = createInitialArray(30);
+      
+      // 2. 複製一份陣列用於打亂
+      let shuffledArray = [...initialArray];
+
+      // 3. 執行 Fisher-Yates 洗牌演算法
+      for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+      }
+
+      // 4. 抽取並排序
+      let drawnNumbers = shuffledArray.slice(0, DRAW_COUNT);
+      let sortedNumbers = [...drawnNumbers]; 
+      sortedNumbers.sort((a, b) => a - b); // 由小到大排序
+      
+      // 5. 計算最大值和最小值
+      const minValue = sortedNumbers[0]; 
+      const maxValue = sortedNumbers[sortedNumbers.length - 1];
+      
+      // 6. 顯示結果 (使用新的 HTML 結構)
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `
+        <div class="result-row">
+            <span class="label">抽取結果 (已排序):</span>
+            <span class="numbers-display highlight-text">[${sortedNumbers.join(', ')}]</span>
+        </div>
+
+        <div class="result-row" style="display: flex; justify-content: space-between;">
+            <div>
+                <span class="label">最小值:</span>
+                <span class="numbers-display">${minValue}</span>
+            </div>
+            <div>
+                <span class="label">最大值:</span>
+                <span class="numbers-display">${maxValue}</span>
+            </div>
+        </div>
+
+        <div class="result-row">
+             <span class="label">原始範圍:</span>
+             <span class="numbers-display" style="font-size: 0.9rem;">1 ~ 30</span>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>

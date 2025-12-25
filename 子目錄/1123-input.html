@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歡迎頁面</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        img {
+            max-width: 300px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+    <h1>歡迎來到我的網站！</h1>
+    
+    <p>輸入你的名字：</p>
+    <input type="text" id="username" placeholder="請輸入名稱">
+    <input type="password" id="pw" placeholder="請輸入密碼">
+    <p>點擊下方按鈕看看驚喜訊息</p>
+    <button onclick="showMessage()">點我!</button>
+
+    <script>
+        function showMessage() {
+            const name = document.getElementById("username").value;
+            if (name) {
+                alert("HiHi~~，" + name + "！What a wonderful world😊");
+            } else {
+                alert("HiHi~~！What a wonderful world😊");
+            }
+        }
+    </script>
+       
+</body>
+</html>

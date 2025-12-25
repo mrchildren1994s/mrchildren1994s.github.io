@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>撲克牌發牌機模擬</title>
+<a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+<style>
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+
+            background-color: #f0f4f7;
+
+        }
+
+        h1 { color: #2c3e50; margin-bottom: 20px; }
+
+        button {
+
+            padding: 12px 25px;
+
+            font-size: 18px;
+
+            margin: 10px;
+
+            cursor: pointer;
+
+            background-color: #3498db;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            transition: background-color 0.3s, transform 0.1s;
+
+            font-weight: bold;
+
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+        }
+
+        button:hover { background-color: #2980b9; transform: translateY(-2px); }
+
+        #output {
+
+            margin-top: 30px;
+
+            width: 80%;
+
+            max-width: 800px;
+
+            padding: 20px;
+
+            border: 1px dashed #e74c3c; /* 紅色虛線強調 */
+
+            background-color: #fff8e1; /* 淺黃色背景 */
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            font-size: 20px;
+
+            color: #34495e;
+
+        }
+
+        .result-section { margin-bottom: 10px; font-weight: bold; }
+
+        .card-container {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+        .card {
+
+            padding: 10px 15px;
+
+            border: 1px solid #bdc3c7;
+
+            border-radius: 5px;
+
+            background-color: #ffffff;
+
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+
+            font-family: 'Courier New', Courier, monospace;
+
+            font-size: 18px;
+
+            min-width: 100px;
+
+            text-align: center;
+
+        }
+
+        /* 區分紅黑花色 */
+
+        .red { color: #e74c3c; } 
+
+        .black { color: #2c3e50; }
+</style>
+</head>
+<body>
+<h1>🃏 撲克牌發牌機模擬</h1>
+<button onclick="dealCards()">發牌 (抽取 5 張)</button>
+<button onclick="dealCards(10)">發牌 (抽取 10 張)</button>
+<div id="output">
+<p class="result-section">狀態：點擊按鈕發牌。</p>
+</div>
+<script>
+
+        // 設定要抽取的數字數量 (預設為 5 張牌)
+
+        const DEFAULT_DRAW_COUNT = 5; 
+
+        /**
+
+         * 將 1-52 的數字轉換為卡牌的花色和點數
+
+         * @param {number} num - 1 到 52 的數字
+
+         * @returns {object} 包含花色、點數和 CSS 顏色的物件
+
+         */
+
+        function getCardValue(num) {
+
+            const suits = ['黑桃', '紅心', '方塊', '梅花']; // 順序：Spades, Hearts, Diamonds, Clubs
+
+            const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+            // 由於花色是以 13 張為一個循環，我們使用 (num - 1)
+
+            const suitIndex = Math.floor((num - 1) / 13);
+
+            const rankIndex = (num - 1) % 13;
+
+            const suit = suits[suitIndex];
+
+            const rank = ranks[rankIndex];
+
+            const colorClass = (suit === '紅心' || suit === '方塊') ? 'red' : 'black';
+
+            return { suit, rank, cardName: `${suit} ${rank}`, colorClass };
+
+        }
+
+        /**
+
+         * 創建包含 1 到 52 的初始牌組陣列
+
+         */
+
+        function createDeck() {
+
+            return Array.from({ length: 52 }, (_, i) => i + 1);
+
+        }
+
+        /**
+
+         * 使用 Fisher-Yates 演算法打亂牌組
+
+         * @param {number[]} deck - 牌組陣列
+
+         * @returns {number[]} 打亂後的牌組
+
+         */
+
+        function shuffleDeck(deck) {
+
+            let shuffled = [...deck];
+
+            for (let i = shuffled.length - 1; i > 0; i--) {
+
+                const j = Math.floor(Math.random() * (i + 1));
+
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+
+            }
+
+            return shuffled;
+
+        }
+
+        /**
+
+         * 發牌並顯示結果
+
+         * @param {number} [count=DEFAULT_DRAW_COUNT] - 要抽取的牌數
+
+         */
+
+        function dealCards(count = DEFAULT_DRAW_COUNT) {
+
+            // 1. 建立初始牌組 (1-52)
+
+            const initialDeck = createDeck();
+
+            // 2. 打亂牌組 (洗牌)
+
+            const shuffledDeck = shuffleDeck(initialDeck);
+
+            // 3. 抽取牌
+
+            const drawnNumbers = shuffledDeck.slice(0, count);
+
+            // 4. 轉換為卡牌物件並排序 (依數字大小排序，即依花色和點數順序)
+
+            const drawnCards = drawnNumbers.map(num => getCardValue(num));
+
+            // 5. 排序：依原始數字大小（花色順序：黑桃 > 紅心 > 方塊 > 梅花；點數 A-K）
+
+            // 注意：這裡的排序是基於 1-52 的數字，不是單純的點數 A=1, 2=2...
+
+            const sortedCards = [...drawnNumbers]
+
+                                .sort((a, b) => a - b) // 依數字從小到大排序
+
+                                .map(num => getCardValue(num)); // 再轉換為卡牌物件
+
+            // 6. 計算最大值和最小值（基於 1-52 數字）
+
+            // 排序後的 sortedCards 中，最小的數字在第一個，最大的在最後一個
+
+            const minValueCard = sortedCards[0];
+
+            const maxValueCard = sortedCards[sortedCards.length - 1];
+
+            // 7. 生成 HTML 顯示
+
+            const outputDiv = document.getElementById('output');
+
+            // 繪製卡牌列表
+
+            const cardHtml = drawnCards.map(card => 
+
+                `<div class="card ${card.colorClass}">${card.cardName}</div>`
+
+            ).join('');
+
+            outputDiv.innerHTML = `
+<h2>發出 ${count} 張牌</h2>
+<div class="card-container">${cardHtml}</div>
+<hr style="width: 70%; margin: 20px auto;">
+<p class="result-section">
+<span class="black">依數字順序排序 (由小到大):</span> 
+<div class="card-container">
+
+                        ${sortedCards.map(card => `<div class="card ${card.colorClass}">${card.cardName}</div>`).join('')}
+</div>
+</p>
+<p class="result-section">
+
+                    最小值 (數字最小): <span class="highlighted">${minValueCard.cardName}</span>
+</p>
+<p class="result-section">
+
+                    最大值 (數字最大): <span class="highlighted">${maxValueCard.cardName}</span>
+</p>
+
+            `;
+
+            // 彈出視窗顯示簡潔結果
+
+            const sortedNames = sortedCards.map(c => c.cardName);
+
+            alert(`
+
+                發牌結果 (共 ${count} 張):
+
+                排序結果: [${sortedNames.join(', ')}]
+
+                ---------------------------
+
+                最小值 (數字): ${minValueCard.cardName}
+
+                最大值 (數字): ${maxValueCard.cardName}
+
+            `);
+
+        }
+</script>
+</body>
+</html>
+ 

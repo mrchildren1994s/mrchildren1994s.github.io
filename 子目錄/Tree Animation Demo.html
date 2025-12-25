@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>資料結構 - 樹的互動動畫示範</title>
+<a href="../子目錄/學習歷程.html" class="back-link">← 回『學習歷程』</a>
+<style>
+  body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    background: #f2f7ff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 10px;
+  }
+  #treeCanvas {
+    border: 2px solid #4a90e2;
+    background: white;
+    border-radius: 12px;
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+  }
+  button {
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    background: #4a90e2;
+    color: white;
+  }
+  button:hover {
+    background: #3574b5;
+  }
+  .accordion {
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    padding: 12px;
+    width: 90%;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    outline: none;
+    margin: 5px auto;
+    transition: 0.3s;
+  }
+  .accordion.active, .accordion:hover {
+    background-color: #3574b5;
+  }
+  .panel {
+    padding: 0 12px;
+    display: none;
+    background-color: #e7f0ff;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 0 auto 10px;
+    width: 90%;
+  }
+</style>
+</head>
+<body>
+<h1>資料結構：樹的互動動畫示範</h1>
+<p>示範：依序插入節點 → 自動繪製 BST → BFS / DFS 動畫</p>
+
+<button onclick="insertNode()">插入節點</button>
+<button onclick="resetTree()">重置</button>
+<button onclick="animateDFS()">DFS 遍歷動畫</button>
+<button onclick="animateBFS()">BFS 遍歷動畫</button>
+
+<button class="accordion">說明 / 教學</button>
+<div class="panel">
+  <p>1️⃣ 插入節點：依序將節點加入 BST</p>
+  <p>2️⃣ DFS（深度優先）：先序遍歷節點，依次亮燈</p>
+  <p>3️⃣ BFS（廣度優先）：逐層遍歷節點，依次亮燈</p>
+</div>
+
+<canvas id="treeCanvas" width="900" height="500"></canvas>
+
+<script>
+class Node {
+  constructor(value, x = 0, y = 0) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.x = x;
+    this.y = y;
+  }
+}
+
+class BST {
+  constructor() {
+    this.root = null;
+  }
+  insert(value) {
+    let newNode = new Node(value);
+    if (!this.root) { this.root = newNode; return; }
+    let current = this.root;
+    while (true) {
+      if (value < current.value) {
+        if (!current.left) { current.left = newNode; return; }
+        current = current.left;
+      } else {
+        if (!current.right) { current.right = newNode; return; }
+        current = current.right;
+      }
+    }
+  }
+}
+
+let tree = new BST();
+let ctx = document.getElementById("treeCanvas").getContext("2d");
+let insertCount = 0;
+let randomValues = [50, 30, 70, 20, 40, 60, 80];
+
+function insertNode() {
+  if (insertCount >= randomValues.length) return;
+  let value = randomValues[insertCount++];
+  tree.insert(value);
+  drawTree();
+}
+function resetTree() { tree = new BST(); insertCount = 0; drawTree(); }
+
+function drawTree(highlightNode = null) {
+  ctx.clearRect(0, 0, 900, 500);
+  drawNode(tree.root, 450, 50, 200, highlightNode);
+}
+
+function drawNode(node, x, y, offset, highlightNode = null) {
+  if (!node) return;
+  node.x = x; node.y = y;
+
+  ctx.fillStyle = (node === highlightNode) ? "#e94e77" : "#4a90e2";
+  ctx.strokeStyle = "#333";
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.arc(x, y, 22, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = "white";
+  ctx.font = "16px Microsoft JhengHei";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(node.value, x, y);
+
+  if (node.left) { drawLine(x, y, x - offset, y + 80); drawNode(node.left, x - offset, y + 80, offset * 0.6, highlightNode); }
+  if (node.right) { drawLine(x, y, x + offset, y + 80); drawNode(node.right, x + offset, y + 80, offset * 0.6, highlightNode); }
+}
+
+function drawLine(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
+
+function animateDFS() { let nodes = []; preOrder(tree.root, nodes); animateNodes(nodes); }
+function preOrder(node, nodes) { if (!node) return; nodes.push(node); preOrder(node.left, nodes); preOrder(node.right, nodes); }
+
+function animateBFS() { let nodes = []; let queue = []; if (tree.root) queue.push(tree.root);
+while(queue.length){ let n = queue.shift(); nodes.push(n); if(n.left) queue.push(n.left); if(n.right) queue.push(n.right); }
+animateNodes(nodes); }
+
+function animateNodes(nodes) {
+  let i = 0;
+  let interval = setInterval(() => {
+    if (i >= nodes.length) { clearInterval(interval); drawTree(); return; }
+    drawTree(nodes[i]);
+    i++;
+  }, 700);
+}
+
+drawTree();
+
+// Accordion script
+var acc = document.getElementsByClassName("accordion");
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    let panel = this.nextElementSibling;
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+}
+</script>
+</body>
+</html>

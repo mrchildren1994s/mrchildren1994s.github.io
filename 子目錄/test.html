@@ -1,0 +1,225 @@
+<!DOCTYPE html> 
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人履歷｜林貞君</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      margin: 40px;
+      background-color: #e8f2fb;
+      overflow-x: hidden;
+    }
+
+    /* ========== 漢堡選單（含變 X 動畫） ========== */
+    .menu-icon {
+      width: 35px;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+    }
+
+    .menu-icon div {
+      width: 100%;
+      height: 5px;
+      background-color: #444;
+      margin: 6px 0;
+      border-radius: 5px;
+      transition: 0.4s;
+    }
+
+    /* 變成 X 的動畫 */
+    .change .bar1 {
+      transform: rotate(-45deg) translate(-8px, 8px);
+    }
+    .change .bar2 {
+      opacity: 0;
+    }
+    .change .bar3 {
+      transform: rotate(45deg) translate(-8px, -8px);
+    }
+
+    /* ========== 桌機版：右側滑出選單 ========== */
+    #sideMenu {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #d3e9ff;
+      padding-top: 80px;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.25);
+      transition: 0.4s;
+      z-index: 1000;
+    }
+
+    #sideMenu a {
+      display: block;
+      padding: 15px 20px;
+      font-size: 18px;
+      color: #1a4f8b;
+      text-decoration: none;
+      border-bottom: 1px solid #b9d8f4;
+    }
+
+    #sideMenu a:hover {
+      background-color: #a6c8e1;
+      color: white;
+    }
+
+    /* ========== 手機版：全螢幕 Menu ========== */
+    #mobileMenu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(211, 233, 255, 0.97);
+      z-index: 999;
+      text-align: center;
+      padding-top: 120px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    #mobileMenu a {
+      display: block;
+      padding: 18px;
+      font-size: 22px;
+      color: #1a4f8b;
+      text-decoration: none;
+    }
+
+    #mobileMenu a:hover {
+      color: #0d2e52;
+      font-weight: bold;
+    }
+
+    .mobile-show {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* ========== RWD 設定 ========== */
+    @media (max-width: 768px) {
+      #sideMenu { display: none; }    /* 手機不使用右側選單 */
+      body { margin: 20px; }
+    }
+
+    /* ======= 履歷樣式 ======= */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: auto;
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    }
+
+    th, td {
+      border: 1px solid #a6c8e1;
+      text-align: left;
+      padding: 12px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    tr:nth-child(even) { background-color: #eef6ff; }
+    tr:nth-child(odd) { background-color: #ffffff; }
+
+    th {
+      background-color: #d3e9ff;
+      color: #1a4f8b;
+      width: 25%;
+    }
+
+    img {
+      width: 120px;
+      display: block;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✦✦ 漢堡選單（會變 X） ✦✦ -->
+  <div class="menu-icon" onclick="toggleMenu(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+
+  <!-- ✦✦ 桌機：右側滑出選單 ✦✦ -->
+  <div id="sideMenu">
+    <a href="https://webdesign.tutsplus.com/zh-hant/the-30-css-selectors-you-must-memorize--net-16048t" target="_blank">📘 CSS 學習參考網站</a>
+    <a href="子目錄/學習歷程.html" target="_blank">📁 我的學習歷程</a>
+  </div>
+
+  <!-- ✦✦ 手機：全畫面覆蓋選單 ✦✦ -->
+  <div id="mobileMenu">
+    <a href="https://webdesign.tutsplus.com/zh-hant/the-30-css-selectors-you-must-memorize--net-16048t" target="_blank">📘 CSS 學習參考網站</a>
+    <a href="子目錄/學習歷程.html" target="_blank">📁 我的學習歷程</a>
+  </div>
+
+
+  <!-- ======= 履歷內容 ======= -->
+  <header>
+    <h2>個人履歷</h2>
+  </header>
+
+  <table>
+    <tr>
+      <th>姓名</th>
+      <td>林貞君 (艾琳)</td>
+      <td rowspan="5" style="text-align: center;">
+        <img src="picture/cat-image.jpg" alt="大頭照">
+      </td>
+    </tr>
+    <tr><th>學號</th><td>3311431019</td></tr>
+    <tr><th>電子郵件</th><td><a href="https://nd.nutc.edu.tw/" target="_blank">我的網頁</a></td></tr>
+    <tr><th>電話</th><td>09xx-xxx-xxx</td></tr>
+    <tr><th>聯絡地址</th><td>美食沙漠可以減肥的新竹市</td></tr>
+    <tr><th>學歷</th><td colspan="2">國立台中科技大學 資訊管理系</td></tr>
+    <tr><th>工作內容</th><td colspan="2">
+      ‧ 分析實驗室-化性部門<br>
+      ‧ 專案管理<br>
+      ‧ 案件討論與推進<br>
+      ‧ 進度追蹤
+    </td></tr>
+    <tr><th>興趣</th><td colspan="2">追劇、聽音樂</td></tr>
+    <tr><th>最喜歡的藝人</th><td colspan="2">
+      <a href="https://www.youtube.com/channel/UCXteDRy5qB0IjA8WPusCJ7w" target="_blank">Mr.Children</a>
+    </td></tr>
+  </table>
+
+  <script>
+    function toggleMenu(icon) {
+      icon.classList.toggle("change");
+
+      let side = document.getElementById("sideMenu");
+      let mobile = document.getElementById("mobileMenu");
+
+      // 判斷是手機 or 桌機
+      if (window.innerWidth <= 768) {
+        mobile.classList.toggle("mobile-show");
+      } else {
+        side.style.right = (side.style.right === "0px") ? "-260px" : "0px";
+      }
+    }
+  </script>
+
+</body>
+</html>

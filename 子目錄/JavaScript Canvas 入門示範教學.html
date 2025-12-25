@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Canvas 示範教學</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: #f2f7ff;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.8;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2a4d8f;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      max-width: 900px;
+    }
+
+    /* 下拉選單（details/summary）設計 */
+    details {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    summary {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2a4d8f;
+      outline: none;
+    }
+
+    summary:hover {
+      color: #1d3766;
+    }
+
+    #backTop {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 12px 18px;
+      background: #2a4d8f;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Canvas 入門示範教學</h1>
+
+  
+
+  <script>
+    const canvas = document.getElementById("demoCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let x = 50;
+    let speed = 3;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.beginPath();
+      ctx.arc(x, 150, 20, 0, Math.PI * 2);
+      ctx.fillStyle = "#2a4d8f";
+      ctx.fill();
+
+      x += speed;
+      if (x > canvas.width - 20 || x < 20) speed = -speed;
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+  <div class="section">
+    <h2>Canvas 文字教學</h2>
+<a href="../子目錄/學習歷程.html" class="back-link">回『學習歷程』</a>
+    <details>
+      <summary>1. 更多動畫示範</summary>
+      <p>Canvas 可製作彈跳球、旋轉方塊、火柴人走路、粒子特效等動畫。核心方式是每幀重新繪製並搭配 requestAnimationFrame。</p>
+    </details>
+
+    <details>
+      <summary>2. 互動功能</summary>
+      <p>Canvas 可以接收滑鼠事件，讓物件跟隨滑鼠移動、點擊觸發效果、或拖曳畫圖，非常適合做互動遊戲。</p>
+    </details>
+
+    <details>
+      <summary>3. 按鈕控制動畫</summary>
+      <p>可利用 HTML 按鈕配合 JavaScript 控制動畫啟動、停止、重設等功能。</p>
+    </details>
+
+    <details>
+      <summary>4. 詳細 Canvas API 說明</summary>
+      <ul>
+        <li>fillRect()：矩形</li>
+        <li>arc()：圓形</li>
+        <li>lineTo()：線條</li>
+        <li>drawImage()：圖片</li>
+        <li>fillText()：文字</li>
+        <li>clearRect()：清除畫布</li>
+        <li>requestAnimationFrame()：動畫更新</li>
+      </ul>
+    </details>
+  </div> </h2>
+    <h3>1. 更多動畫示範</h3>
+    <p>Canvas 可以用來製作各種動畫，例如火柴人走路、彈跳球、旋轉方塊、粒子效果與自然模擬（如雨滴動畫）。動畫的本質是：每一幀重新繪製新的畫面，再用 requestAnimationFrame 持續更新。</p>
+
+    <h3>2. 互動功能</h3>
+    <p>Canvas 支援滑鼠事件，你可以透過滑鼠位置 (mouseX, mouseY) 讓物件跟著移動、點擊觸發動畫、或者像畫圖工具一樣拖曳繪線。這讓 Canvas 可以製作互動遊戲與工具。</p>
+
+    <h3>3. 按鈕控制動畫</h3>
+    <p>可以結合 HTML 按鈕（如開始、暫停、重設）控制動畫流程。做法是加入按鈕元素，再用 JavaScript 綁定 onclick 事件，控制動畫是否繼續更新。</p>
+
+    <h3>4. 詳細 Canvas API 說明</h3>
+    <p>Canvas 提供 2D API，包括：</p>
+    <ul>
+      <li>fillRect(), strokeRect()：繪製方形</li>
+      <li>arc()：繪製圓形</li>
+      <li>beginPath(), moveTo(), lineTo()：繪線</li>
+      <li>drawImage()：繪圖片</li>
+      <li>fillText()：繪文字</li>
+      <li>clearRect()：清除畫布</li>
+      <li>requestAnimationFrame()：動畫更新</li>
+    </ul>
+    <p>透過這些 API，便能製作圖形、文字、圖片與動畫，並進階整合為遊戲或工具。</p>
+  </div>
+
+  <div class="section">
+    <h2>動畫示範：火柴人走路</h2>
+    <p>以下示範簡易的火柴人走路動畫，利用線段組合成身體、手腳，並透過角度變化產生走路效果。</p>
+    <canvas id="stickmanCanvas" width="600" height="300" style="border:2px solid #2a4d8f; border-radius:10px; display:block; margin:20px auto;"></canvas>
+  </div>
+
+  <script>
+    const smCanvas = document.getElementById("stickmanCanvas");
+    const smCtx = smCanvas.getContext("2d");
+
+    let angle = 0;
+
+    function drawStickman() {
+      smCtx.clearRect(0, 0, smCanvas.width, smCanvas.height);
+      smCtx.lineWidth = 4;
+      smCtx.strokeStyle = "#000";
+
+      const x = 300;
+      const y = 150;
+
+      // 頭
+      smCtx.beginPath();
+      smCtx.arc(x, y - 40, 20, 0, Math.PI * 2);
+      smCtx.stroke();
+
+      // 身體
+      smCtx.beginPath();
+      smCtx.moveTo(x, y - 20);
+      smCtx.lineTo(x, y + 40);
+      smCtx.stroke();
+
+      // 手臂
+      smCtx.beginPath();
+      smCtx.moveTo(x, y);
+      smCtx.lineTo(x - 30 * Math.cos(angle), y + 20);
+      smCtx.moveTo(x, y);
+      smCtx.lineTo(x + 30 * Math.cos(angle), y + 20);
+      smCtx.stroke();
+
+      // 腿
+      smCtx.beginPath();
+      smCtx.moveTo(x, y + 40);
+      smCtx.lineTo(x - 30 * Math.cos(angle), y + 90);
+      smCtx.moveTo(x, y + 40);
+      smCtx.lineTo(x + 30 * Math.cos(angle), y + 90);
+      smCtx.stroke();
+
+      angle += 0.1;
+      requestAnimationFrame(drawStickman);
+    }
+
+    drawStickman();
+  </script>
+
+  <div class="section">
+    <h2>火柴人動畫控制（開始 / 停止）</h2>
+    <button id="startBtn" style="padding:10px 20px; margin-right:10px; border-radius:10px;">開始</button>
+    <button id="stopBtn" style="padding:10px 20px; border-radius:10px;">停止</button>
+    <canvas id="stickmanCanvas2" width="600" height="300" style="border:2px solid #2a4d8f; border-radius:10px; display:block; margin:20px auto;"></canvas>
+  </div>
+
+  <script>
+    const smCanvas2 = document.getElementById("stickmanCanvas2");
+    const smCtx2 = smCanvas2.getContext("2d");
+
+    let angle2 = 0;
+    let running = false;
+    let animationId = null;
+
+    function drawStickman2() {
+      smCtx2.clearRect(0, 0, smCanvas2.width, smCanvas2.height);
+      smCtx2.lineWidth = 4;
+      smCtx2.strokeStyle = "#000";
+
+      const x = 300;
+      const y = 150;
+
+      // 頭
+      smCtx2.beginPath();
+      smCtx2.arc(x, y - 40, 20, 0, Math.PI * 2);
+      smCtx2.stroke();
+
+      // 身體
+      smCtx2.beginPath();
+      smCtx2.moveTo(x, y - 20);
+      smCtx2.lineTo(x, y + 40);
+      smCtx2.stroke();
+
+      // 手臂
+      smCtx2.beginPath();
+      smCtx2.moveTo(x, y);
+      smCtx2.lineTo(x - 30 * Math.cos(angle2), y + 20);
+      smCtx2.moveTo(x, y);
+      smCtx2.lineTo(x + 30 * Math.cos(angle2), y + 20);
+      smCtx2.stroke();
+
+      // 腿
+      smCtx2.beginPath();
+      smCtx2.moveTo(x, y + 40);
+      smCtx2.lineTo(x - 30 * Math.cos(angle2), y + 90);
+      smCtx2.moveTo(x, y + 40);
+      smCtx2.lineTo(x + 30 * Math.cos(angle2), y + 90);
+      smCtx2.stroke();
+
+      angle2 += 0.1;
+      if (running) animationId = requestAnimationFrame(drawStickman2);
+    }
+
+    document.getElementById("startBtn").onclick = function() {
+      if (!running) {
+        running = true;
+        drawStickman2();
+      }
+    };
+
+    document.getElementById("stopBtn").onclick = function() {
+      running = false;
+      cancelAnimationFrame(animationId);
+    };
+  </script>
+
+  <button id="backTop">回到頂端</button>
+
+  <script>
+    document.getElementById("backTop").onclick = function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>

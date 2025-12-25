@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人履歷｜林貞君</title>
+<style>
+
+    body {
+
+      font-family: "Microsoft JhengHei", sans-serif;
+
+      margin: 0;
+
+      background-color: #e8f2fb;
+
+    }
+
+    /* ---------- 水藍色密碼遮罩 ---------- */
+
+    #passwordOverlay {
+
+      position: fixed;
+
+      top: 0;
+
+      left: 0;
+
+      width: 100%;
+
+      height: 100%;
+
+      background: rgba(140, 190, 255, 0.7); 
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      z-index: 9999;
+
+    }
+
+    #passwordBox {
+
+      background: white;
+
+      width: 330px;
+
+      padding: 28px;
+
+      border-radius: 18px;
+
+      text-align: center;
+
+      box-shadow: 0 5px 28px rgba(0, 90, 150, 0.4); 
+
+      animation: fadeIn 0.45s ease;
+
+    }
+
+    @keyframes fadeIn {
+
+      from {opacity: 0; transform: scale(0.92);}
+
+      to {opacity: 1; transform: scale(1);}
+
+    }
+
+    #passwordBox h2 {
+
+      color: #1a69b5;
+
+      margin-bottom: 18px;
+
+    }
+
+    #pwdInput {
+
+      width: 80%;
+
+      padding: 12px; 
+
+      border-radius: 10px;
+
+      border: 1px solid #92bdf1;
+
+      outline: none;
+
+      transition: 0.25s;
+
+      font-size: 16px;
+
+      text-align: center; 
+
+    }
+
+    #pwdInput:focus {
+
+      border-color: #4e95ea; 
+
+      box-shadow: 0 0 6px rgba(78, 149, 234, 0.6); 
+
+    }
+
+    #pwdBtn {
+
+      margin-top: 15px;
+
+      padding: 10px 28px;
+
+      background: #6fb3ff;
+
+      color: white;
+
+      border: none;
+
+      border-radius: 12px;
+
+      cursor: pointer;
+
+      font-size: 16px;
+
+      transition: 0.3s;
+
+      font-weight: bold; 
+
+    }
+
+    #pwdBtn:hover {
+
+      background: #4e95ea;
+
+    }
+
+    #pwdError {
+
+      margin-top: 15px; 
+
+      color: #e74c3c;
+
+      font-weight: bold;
+
+      display: none;
+
+    }
+
+    /* 修正點 1: 密碼提示樣式 - 移除 display: none; 讓它預設顯示 */
+
+    #pwdHint {
+
+        margin-top: 15px;
+
+        padding: 10px;
+
+        background-color: #fff0d9; 
+
+        border: 1px solid #ffcc66;
+
+        color: #b8860b; 
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        /* display: none; <-- 這一行被移除或註釋掉了 */
+
+    }
+
+
+    /* ---------- 履歷樣式 (保持不變) ---------- */
+
+    header {
+
+      text-align: center;
+
+      margin: 30px 0;
+
+    }
+
+    table {
+
+      border-collapse: collapse;
+
+      width: 80%;
+
+      margin: auto;
+
+      background-color: white;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+    }
+
+    th, td {
+
+      border: 1px solid #a6c8e1;
+
+      text-align: left;
+
+      padding: 12px;
+
+      font-size: 16px;
+
+      vertical-align: middle;
+
+    }
+
+    tr:nth-child(odd) {
+
+      background-color: #ffffff;
+
+    }
+
+    tr:nth-child(even) {
+
+      background-color: #eef6ff;
+
+    }
+
+    th {
+
+      background-color: #d3e9ff;
+
+      color: #1a4f8b;
+
+      width: 25%;
+
+    }
+
+    img {
+
+      width: 120px;
+
+      border-radius: 12px;
+
+      display: block;
+
+      margin: auto;
+
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+
+    }
+</style>
+</head>
+<body>
+
+<div id="passwordOverlay">
+<div id="passwordBox">
+<h2>🔒 請輸入密碼</h2>
+<input type="password" id="pwdInput" placeholder="請輸入密碼">
+<button id="pwdBtn">登入履歷</button>
+<div id="pwdError">❌ 密碼錯誤，請再試一次。</div>
+<div id="pwdHint">
+
+        **提示：** 密碼是1234。
+</div>
+</div>
+</div>
+<script>
+
+  const correctPassword = "1234";
+
+  // 修正點 2: 移除 errorCount 變數和相關的 if 判斷邏輯。
+
+  document.getElementById("pwdBtn").onclick = function () {
+
+    let pwd = document.getElementById("pwdInput").value;
+
+    document.getElementById("pwdError").style.display = "none"; // 每次嘗試先隱藏錯誤訊息
+
+    if (pwd === correctPassword) {
+
+      document.getElementById("passwordOverlay").style.display = "none";
+
+      document.body.style.overflow = "auto"; 
+
+    } else {
+
+      document.getElementById("pwdError").style.display = "block";
+
+      // 提示已經預設顯示，不需要在這裡控制它的顯示狀態
+
+    }
+
+    document.getElementById("pwdInput").value = ""; 
+
+    document.getElementById("pwdInput").focus(); 
+
+  };
+
+  // 允許按 Enter 鍵觸發登入
+
+  document.getElementById("pwdInput").addEventListener("keypress", function(event) {
+
+    if (event.key === "Enter") {
+
+      document.getElementById("pwdBtn").click();
+
+    }
+
+  });
+</script>
+
+<header>
+<h2>個人履歷</h2>
+</header>
+<table>
+<tr>
+<th>姓名</th>
+<td>林貞君 (艾琳)</td>
+<td rowspan="5" style="text-align:center;">
+<img src="picture/cat-image.jpg" alt="大頭照">
+</td>
+</tr>
+<tr><th>學號</th><td>3311431019</td></tr>
+<tr>
+<th>電子郵件</th>
+<td><a href="https://nd.nutc.edu.tw/" target="_blank">我的網頁</a></td>
+</tr>
+<tr><th>電話</th><td>09xx-xxx-xxx</td></tr>
+<tr><th>聯絡地址</th><td>美食沙漠可以減肥的新竹市</td></tr>
+<tr><th>學歷</th><td colspan="2">國立台中科技大學 資訊管理系</td></tr>
+<tr>
+<th>工作內容</th>
+<td colspan="2">
+
+      ‧ 分析實驗室-化性部門<br>
+
+      ‧ 專案管理<br>
+
+      ‧ 案件討論與推進<br>
+
+      ‧ 進度追蹤
+</td>
+</tr>
+<tr><th>興趣</th><td colspan="2">追劇、聽音樂</td></tr>
+<tr>
+<th>喜歡的藝人</th>
+<td colspan="2">
+<a href="https://www.youtube.com/channel/UCXteDRy5qB0IjA8WPusCJ7w" target="_blank">Mr.Children</a>
+</td>
+</tr>
+<tr>
+<th>CSS 學習網站</th>
+<td colspan="2">
+<a href="https://webdesign.tutsplus.com/zh-hant/the-30-css-selectors-you-must-memorize--net-16048t" target="_blank">
+
+        30 種必需記住的 CSS 選擇器
+</a>
+</td>
+</tr>
+<tr>
+<th>我的 Web 練習</th>
+<td colspan="2">
+<a href="子目錄/學習歷程.html" target="_blank">學習歷程</a>
+</td>
+</tr>
+</table>
+</body>
+</html>
+ 
